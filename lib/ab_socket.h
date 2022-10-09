@@ -1,42 +1,32 @@
+/*
+ * This file includes header files
+ * for the abstract socket.
+*/
+
 #pragma once
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
+#include <stdio.h>
 
 #ifdef __linux__
     // Linux platform
-    #include <sys/socket.h>
+    #include <sys/ioctl.h>
     #include <sys/types.h>
-    #include <netinet/in.h>
     #include <netinet/if_ether.h>
 
-    #include <linux/if_ether.h>
     #include <linux/if_packet.h> 
-
-    typedef int socket_id_t;
-    typedef int eth_mode_t;
-
-    #define ETH_PROMISC IFF_PROMISC // promiscuous mode
 
 #elif __APPLE__
     // Apple platform
+    #include <sys/ioctl.h>
     #include <sys/socket.h>
     #include <sys/types.h>
-    #include <sys/_endian.h>
+    #include <net/if.h>
     #include <netinet/in.h>
-
-    typedef int socket_id_t;
-    typedef int eth_mode_t;
-
-    #define ETH_PROMISC 0   // proimiscuous mode
+    #include <netinet/if_ether.h>
 
 #elif _WIN32
     // Windows 32-bits or 64-bits
-    typedef int socket_id_t;
-    typedef int eth_mode_t;
-
-    #define ETH_PROMISC 0   // proimiscuous mode
+    #include <winsock.h>
     
     #ifdef _WIN64
         // Windows 64-bits only
@@ -48,5 +38,3 @@
 #else
     #error No Support Platform
 #endif
-
-int ab_socket();
