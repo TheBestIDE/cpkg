@@ -20,19 +20,6 @@
     // ETH mode
     #define ETH_MODE_PROMISC IFF_PROMISC    // promiscuous mode
 
-    // ---- accept layer ----
-    #define NET_LAYER_ETH PF_PACKET // link layer
-    #define NET_LAYER_IP AF_INET    // ip layer
-
-    // ---- accpet protocol ----
-    // protocol in ETH link layer
-    #define PROTO_ETH_ALL htons(ETH_P_ALL)  // accept all protocol package
-
-    // protocol in ip layer
-    #define PROTO_IP_IP IPPROTO_TCP | IPPROTO_UDP | IPPROTO_ICMP
-    #define PROTO_IP_ICMP IPPROTO_ICMP
-    #define PROTO_IP_TCP IPPROTO_TCP
-    #define PROTO_IP_UDP IPPROTO_UDP
 #elif __APPLE__
     // Apple platform
     typedef int socket_id_t;
@@ -58,8 +45,10 @@
     #error No Support Platform
 #endif
 
+#define SOCK_USE_ETH 0
+#define SOCK_USE_IP 1
 
-int absocket();
+socket_id_t absocket(int sock_layer);
 #define close_absocket(sock) close(sock);
 size_t recv_socket(socket_id_t sock, char* buffer, size_t buf_sz);
 

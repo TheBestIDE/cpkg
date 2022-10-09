@@ -14,3 +14,5 @@ typedef struct member_buffer mbuffer;
 mbuffer* init_mbuffer();
 mbuffer* init_size_mbuffer(size_t len);
 void realloc_mbuffer(mbuffer* mb, size_t len);
+void free_mbuffer(mbuffer* mb);
+const char* to_str_mbuffer(mbuffer* mb);

@@ -26,3 +26,6 @@ struct ip_package {
 
 typedef struct ip_package ip_pkg;
 
+ip_pkg* anlys_package(mbuffer* package);
+void free_ip_pkg(ip_pkg* pkg);
+const char* get_ip_header_proto(byte proto);

@@ -14,3 +14,4 @@ typedef struct ethernet_frame eth_frame;
 #define ETH_PATTERN_IP 0x0800
 
 eth_frame* anlys_frame(mbuffer* frame);
+void free_eth_frame(eth_frame* frame);
