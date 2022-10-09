@@ -1,0 +1,6 @@
+# A library for catching network package
+
+## Directory
+
+- lib: class library to encapsulate kernal network api
+- api: implement catching network package with lib
