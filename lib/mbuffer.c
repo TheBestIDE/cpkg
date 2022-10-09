@@ -47,7 +47,7 @@ const char* to_str_mbuffer(mbuffer* mb) {
     for (i = 0; i < cplt_r; i++) {
         int j = 0;
         for (j = 0; j < 16; j++) {
-            sprintf(str_sk, "%X ", BUF[(i << 4) + j]);
+            sprintf(str_sk, "%02X ", BUF[(i << 4) + j]);
             str_sk += 3;
         }
         *(str_sk - 1) = '\n';

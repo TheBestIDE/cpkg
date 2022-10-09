@@ -14,8 +14,9 @@ void prt_ip_pkg(ip_pkg* ippkg) {
             ippkg->source_addr[0], ippkg->source_addr[1], ippkg->source_addr[2], ippkg->source_addr[3],
             ippkg->target_addr[0], ippkg->target_addr[1], ippkg->target_addr[2], ippkg->target_addr[3]);
     const char* dat_str = to_str_mbuffer(ippkg->data);
-    // printf("数据部分:\n%s\n", dat_str);
+    printf("数据部分:\n%s\n", dat_str);
     printf("------ IP数据包结束 ------\n\n");
+    free(dat_str);
 }
 
 int main(int args, char* argv[]) {
