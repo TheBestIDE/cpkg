@@ -1,15 +1,31 @@
-$(CC) = gcc
-$(CXX) = gcc
+export CC = gcc
+export CXX = gcc
+export AR = ar
 
 target = cpkg
-api_obj = 
-lib_obj = ab_socket.o
+export api_dir = $(shell pwd)/api
+export lib_dir = $(shell pwd)/lib
+api = cpkg-api
+lib = cpkg-lib
 
-${target} : main.o ${api_obj} ${lib_obj}
-	CC ${obj} -o ${target}
+${target} : main.o libcpkg.a
+	$(CC) main.o -L . -lcpkg -o ${target}
 
 main.o : main.c
-	CC -c main.c -o main.o
+	$(CC) -c main.c -I $(api_dir) -I $(lib_dir) -o main.o
 
-ab_socket.o : ab_socket.c
-	CC -c ab_socket.c -o ab_socket.o
+libcpkg.a : ${api} ${lib}
+	$(AR) rc libcpkg.a $(api_dir)/obj/*.o $(lib_dir)/obj/*.o
+
+$(api) :
+	make -C api
+
+$(lib) : 
+	make -C lib
+
+.PHONY : clean
+
+clean :
+	bash -c "cd $(api_dir)/obj; rm -f *.o;"
+	bash -c "cd $(lib_dir)/obj; rm -f *.o;"
+	bash -c "rm main.o; rm libcpkg.a"

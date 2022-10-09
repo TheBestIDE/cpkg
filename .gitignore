@@ -1,1 +1,11 @@
 .vscode
+# object files
+api/obj
+lib/obj
+
+# target file
+cpkg
+# object files
+*.o
+# lib files
+*.a
