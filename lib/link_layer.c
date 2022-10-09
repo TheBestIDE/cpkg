@@ -7,7 +7,7 @@
 /// @return 
 eth_frame* anlys_frame(mbuffer* frame) {
     // MAC Frame size >= 64 bytes
-    if (frame->len <64)
+    if (frame->len < 64)
         return NULL;
 
     eth_frame* eframe = malloc(sizeof(eth_frame));
@@ -26,4 +26,12 @@ eth_frame* anlys_frame(mbuffer* frame) {
     eframe->data->len = frame->len - ETH_ADD_LEN;
 
     return eframe;
+}
+
+void free_eth_frame(eth_frame* frame) {
+    if (frame != NULL) {
+        if (frame->data != NULL)
+            free_mbuffer(frame->data);
+        free(frame);
+    }
 }

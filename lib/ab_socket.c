@@ -2,18 +2,33 @@
 #include "ab_socket_if.h"
 
 /// @brief Create a abstract socket object from different kernal for receiving all data package.
+/// @param sock_layer socket work layer
 /// @return socket id
-socket_id_t absocket() {
+socket_id_t absocket(int sock_layer) {
     socket_id_t socketid = -1;
     #ifdef __linux__
-    socketid = socket(NET_LAYER_ETH, SOCK_RAW, PROTO_ETH_ALL);
+    switch (sock_layer) {
+    case SOCK_USE_ETH:
+        socketid = socket(NET_LAYER_ETH, SOCK_RAW, PROTO_ETH_ALL);
+        break;
+    case SOCK_USE_IP:
+    default:
+        socketid = socket(NET_LAYER_IP, SOCK_RAW, PROTO_IP_ALL);
+        break;
+    }
+    
 
     #elif __APPLE__
-    socketid = socket(NET_LAYER_ETH, SOCK_RAW, PROTO_ETH_ALL);
+    socketid = socket(NET_LAYER_IP, SOCK_RAW, PROTO_IP_ALL);
 
     #elif _WIN32
 
     #endif
+
+    if (socketid == -1) {
+        perror("raw socket init failed, exit.\n");
+        exit(-1);
+    }
 
     return socketid;
 }
